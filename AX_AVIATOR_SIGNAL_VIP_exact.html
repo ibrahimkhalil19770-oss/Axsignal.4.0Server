@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AX AVIATOR SIGNAL VIP</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #020205;
+      --card-bg: rgba(12, 12, 20, 0.88);
+      --neon-red: #ff004f;
+      --neon-blue: #00e5ff;
+      --neon-green: #00ff88;
+      --neon-purple: #9d00ff;
+      --bkash-color: #d12053;
+      --nagad-color: #f7931e;
+      --text-color: #ffffff;
+      --subtext-color: #9494ab;
+      --dynamic-success-color: #00ff88;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lexend', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 80px 15px 60px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #custom-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: rgba(20, 20, 30, 0.95);
+      border: 2px solid var(--neon-red);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(255, 0, 79, 0.6);
+      z-index: 999999;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #custom-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    #offline-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030305;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .offline-icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+      animation: pulseAlert 1.5s infinite alternate;
+    }
+
+    @keyframes pulseAlert {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .offline-title {
+      color: var(--neon-red);
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .offline-desc {
+      color: var(--subtext-color);
+      font-size: 14px;
+      max-width: 280px;
+      line-height: 1.5;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 380px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 2px solid rgba(255, 0, 79, 0.8);
+      border-radius: 35px;
+      padding: 35px 18px 28px;
+      box-shadow: 0 0 35px rgba(255, 0, 79, 0.4), inset 0 0 20px rgba(255, 0, 79, 0.15);
+      margin-top: 20px;
+      margin-bottom: 40px;
+      transition: border-color 0.8s ease, box-shadow 0.8s ease;
+    }
+
+    .container.success-active {
+      border-color: var(--dynamic-success-color);
+      box-shadow: 0 0 35px var(--dynamic-success-color), inset 0 0 20px var(--dynamic-success-color);
+    }
+
+    .developer-tag {
+      position: absolute;
+      top: -50px;
+      left: 0;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 7px 16px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      z-index: 25;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ff0055, #7a00ff, #00d9ff, #00ff66);
+      background-size: 300% 300%;
+      animation: neonLighting 4s ease infinite;
+    }
+
+    .status-tag {
+      position: absolute;
+      bottom: -48px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      padding: 8px 16px;
+      border-radius: 15px;
+      letter-spacing: 0.8px;
+      z-index: 25;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      color: #ffffff;
+      background: linear-gradient(135deg, #00ff66, #00d9ff, #7a00ff, #ff0055);
+      background-size: 300% 300%;
+      animation: neonLighting 4s ease infinite;
+    }
+
+    @keyframes neonLighting {
+      0% { background-position: 0% 50%; box-shadow: 0 0 15px #ff0055, 0 0 25px rgba(255, 0, 85, 0.6); }
+      33% { background-position: 50% 100%; box-shadow: 0 0 15px #7a00ff, 0 0 25px rgba(122, 0, 255, 0.6); }
+      66% { background-position: 100% 50%; box-shadow: 0 0 15px #00d9ff, 0 0 25px rgba(0, 217, 255, 0.6); }
+      100% { background-position: 0% 50%; box-shadow: 0 0 15px #00ff66, 0 0 25px rgba(0, 255, 102, 0.6); }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 12px;
+      background-color: #ffffff;
+      margin-left: 3px;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .animated-robot-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 10px auto 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinning-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: var(--neon-blue);
+      border-bottom-color: var(--neon-red);
+      animation: spinRing 2.5s linear infinite;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .center-robot-svg {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 10px var(--neon-blue));
+      animation: robotPulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes robotPulse {
+      0% { transform: scale(0.95); opacity: 0.85; }
+      100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 16px var(--neon-blue)); }
+    }
+
+    .hidden { display: none !important; }
+
+    .main-title {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      color: var(--neon-blue);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      text-shadow: 0 0 14px rgba(0, 229, 255, 0.7);
+    }
+
+    .main-title span {
+      color: var(--neon-red);
+      display: block;
+      text-shadow: 0 0 14px rgba(255, 0, 79, 0.7);
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 11px;
+      color: var(--neon-red);
+      margin-top: 6px;
+      margin-bottom: 25px;
+      letter-spacing: 3px;
+      font-weight: 700;
+      opacity: 0.95;
+    }
+
+    .input-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 16px 16px 16px 50px;
+      background: rgba(5, 5, 12, 0.85);
+      border: 1.5px solid rgba(255, 0, 79, 0.6);
+      border-radius: 30px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.5), inset 0 0 8px rgba(0,0,0,0.8);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+    }
+
+    .btn-3d {
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 14px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-3d:active { transform: scale(0.96); }
+
+    .btn-login-3d {
+      background: linear-gradient(180deg, #ff0055 0%, #a60033 100%);
+      border: 1px solid #ff4d88;
+      color: #ffffff;
+      box-shadow: 0 6px 20px rgba(255, 0, 85, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-login-3d:hover { box-shadow: 0 0 25px rgba(255, 0, 85, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.6); }
+
+    .btn-buy-3d {
+      background: linear-gradient(180deg, #181828 0%, #080812 100%);
+      border: 1.5px solid var(--neon-blue);
+      color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3), inset 0 2px 4px rgba(0, 229, 255, 0.2);
+    }
+
+    .btn-buy-3d:hover {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.8);
+    }
+
+    .btn-admin-3d {
+      background: transparent;
+      border: 1px solid rgba(157, 0, 255, 0.6);
+      color: #d180ff;
+      font-size: 12px;
+      padding: 12px;
+      border-radius: 25px;
+      box-shadow: inset 0 0 10px rgba(157, 0, 255, 0.2);
+    }
+
+    .btn-admin-3d:hover {
+      border-color: var(--neon-purple);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(157, 0, 255, 0.5);
+    }
+
+    .section-title {
+      text-align: center;
+      color: var(--neon-green);
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .info-box {
+      background: rgba(0, 255, 136, 0.05);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .info-icon {
+      background: var(--neon-green);
+      color: #000;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .info-text {
+      font-size: 11px;
+      color: #d0d0d0;
+      line-height: 1.4;
+    }
+
+    .game-card {
+      background: rgba(10, 15, 10, 0.7);
+      border: 1px solid var(--neon-green);
+      border-radius: 18px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .game-card:hover {
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .game-card-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .game-icon-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 10px;
+      border: 1.5px solid var(--neon-green);
+      color: #fff;
+    }
+
+    .game-title {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--neon-green);
+      letter-spacing: 1px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      background: #000;
+      border: 1px solid var(--neon-green);
+      border-radius: 25px;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .btn-next {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--neon-green);
+      border-radius: 20px;
+      color: var(--neon-green);
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+
+    .btn-next:hover {
+      background: var(--neon-green);
+      color: #000;
+    }
+
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .site-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 6px 4px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .site-item:hover, .site-item.selected {
+      border-color: var(--neon-green);
+      background: rgba(0, 255, 136, 0.1);
+    }
+
+    .site-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 9px;
+      color: #fff;
+      text-shadow: 0 0 3px #000;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .site-name {
+      font-size: 9px;
+      color: #aaa;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .pkg-video-card {
+      background: rgba(0, 255, 136, 0.03);
+      border: 1px solid var(--neon-green);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .pkg-video-card.selected {
+      background: rgba(0, 255, 136, 0.15);
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: -8px;
+      right: 12px;
+      background: #ff003c;
+      color: #fff;
+      font-size: 8px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    .pkg-v-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .pkg-v-sub {
+      font-size: 10px;
+      color: var(--subtext-color);
+      margin-top: 2px;
+    }
+
+    .pkg-v-price { text-align: right; }
+
+    .pkg-v-amount {
+      font-size: 15px;
+      font-weight: bold;
+      color: var(--neon-green);
+    }
+
+    .pkg-v-old {
+      font-size: 9px;
+      color: #777;
+      text-decoration: line-through;
+    }
+
+    .pay-selector {
+      background: #ffffff;
+      color: #000;
+      border-radius: 20px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .pay-selector.active {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+    }
+
+    .pay-selector-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .badge-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .badge-bkash { background-color: var(--bkash-color); }
+    .badge-nagad { background-color: var(--nagad-color); }
+
+    .pay-card-new {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 15px;
+      color: #333333;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    .pay-card-header {
+      background: #e2136e;
+      color: #ffffff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .pay-card-header.nagad-bg { background: var(--nagad-color); }
+
+    .pay-card-title {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .pay-card-sub {
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.9;
+      text-transform: uppercase;
+    }
+
+    .pay-card-price {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .pay-card-body { padding: 18px; }
+
+    .pay-instructions {
+      border: 1px dashed #cccccc;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 18px;
+      background: #fdfdfd;
+    }
+
+    .pay-instruction-item {
+      font-size: 11px;
+      color: #333333;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .pay-instruction-item:last-child { margin-bottom: 0; }
+
+    .pay-number-box {
+      background: #f0f3f8;
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .pay-num-text {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #000000;
+    }
+
+    .copy-btn-new {
+      background: #333333;
+      color: #ffffff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn-new:hover { background: #000000; }
+
+    .pay-input-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #222222;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+      text-align: left;
+    }
+
+    .trx-input-new {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #dddddd;
+      border-radius: 12px;
+      padding: 14px;
+      color: #333333;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .trx-input-new:focus { border-color: #e2136e; }
+
+    .btn-verify-pay {
+      width: 100%;
+      padding: 15px;
+      background: #e2136e;
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(226, 19, 110, 0.4);
+    }
+
+    .btn-verify-pay:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-cancel-pay {
+      width: 100%;
+      padding: 14px;
+      background: #090912;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 15px;
+      transition: all 0.2s;
+    }
+
+    .btn-cancel-pay:hover {
+      border-color: var(--neon-red);
+      color: var(--neon-red);
+    }
+
+    /* 3D ANIMATED CHECKMARK STYLES */
+    .success-icon-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px 0 20px 0;
+      perspective: 1000px;
+    }
+
+    .check-svg-3d {
+      width: 75px;
+      height: 75px;
+      filter: drop-shadow(0 8px 15px var(--dynamic-success-color));
+      transform-style: preserve-3d;
+      animation: popIn3D 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 float3D 3s ease-in-out infinite 1.2s;
+    }
+
+    .check-mark-path {
+      stroke: var(--dynamic-success-color);
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 0.8s ease-in-out 0.3s forwards;
+      transition: stroke 0.8s ease;
+    }
+
+    .check-circle-path {
+      stroke: var(--dynamic-success-color);
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawCheck 1s ease-in-out forwards;
+      transition: stroke 0.8s ease;
+    }
+
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes popIn3D {
+      0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3) rotateX(45deg) rotateY(-45deg);
+      }
+      60% {
+        transform: scale3d(1.15, 1.15, 1.15) rotateX(-10deg) rotateY(10deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg);
+      }
+    }
+
+    @keyframes float3D {
+      0%, 100% {
+        transform: translateY(0) rotateX(0deg) rotateY(0deg);
+        filter: drop-shadow(0 8px 15px var(--dynamic-success-color));
+      }
+      50% {
+        transform: translateY(-8px) rotateX(12deg) rotateY(-10deg);
+        filter: drop-shadow(0 18px 25px var(--dynamic-success-color));
+      }
+    }
+
+    .status-badge {
+      display: inline-block;
+      border: 1px solid var(--dynamic-success-color);
+      color: var(--dynamic-success-color);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 12px var(--dynamic-success-color);
+      transition: border-color 0.8s ease, color 0.8s ease, box-shadow 0.8s ease;
+    }
+
+    .success-heading {
+      color: var(--dynamic-success-color);
+      font-size: 22px;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 12px;
+      text-shadow: 0 0 14px var(--dynamic-success-color);
+      transition: color 0.8s ease, text-shadow 0.8s ease;
+    }
+
+    .success-desc {
+      font-size: 12px;
+      color: var(--subtext-color);
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .success-info-card {
+      background: rgba(5, 5, 12, 0.95);
+      border-left: 4px solid var(--dynamic-success-color);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 22px;
+      text-align: left;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+      transition: border-left-color 0.8s ease;
+    }
+
+    .success-info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .success-info-row:last-child { margin-bottom: 0; }
+
+    .success-info-row .label {
+      color: var(--dynamic-success-color);
+      font-weight: 700;
+      transition: color 0.8s ease;
+    }
+
+    .success-info-row .value { color: #ffffff; font-weight: 600; }
+
+    .btn-home {
+      background: transparent;
+      border: 2px solid var(--dynamic-success-color);
+      color: var(--dynamic-success-color);
+      border-radius: 30px;
+      padding: 14px;
+      width: 100%;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--dynamic-success-color);
+      transition: all 0.8s ease;
+    }
+
+    .btn-home:hover {
+      background: var(--dynamic-success-color);
+      color: #000;
+      box-shadow: 0 0 25px var(--dynamic-success-color);
+    }
+
+    .dash-header {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 12px rgba(255, 0, 79, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: var(--neon-red);
+      color: #fff;
+    }
+
+    .prime-title {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #9d00ff, #ff0055);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+
+    .dash-circle-wrapper {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      margin: 0 auto 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .outer-dashed-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px dashed #9d00ff;
+      box-shadow: 0 0 20px rgba(157, 0, 255, 0.6);
+      animation: rotateRing 20s linear infinite;
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .middle-red-wave {
+      position: absolute;
+      width: 82%;
+      height: 82%;
+      border-radius: 40% 50% 45% 55%;
+      border: 3px solid var(--neon-red);
+      box-shadow: 0 0 18px rgba(255, 0, 79, 0.8);
+      animation: waveMorph 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes waveMorph {
+      0% { transform: rotate(0deg) scale(1); border-radius: 40% 50% 45% 55%; }
+      100% { transform: rotate(180deg) scale(1.04); border-radius: 55% 40% 50% 45%; }
+    }
+
+    .inner-green-rings {
+      position: absolute;
+      width: 65%;
+      height: 65%;
+      border-radius: 50%;
+      border: 1px solid var(--neon-green);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.5);
+    }
+
+    .circle-content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+    }
+
+    .plane-icon-img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 2px;
+      filter: drop-shadow(0 0 6px var(--neon-green));
+    }
+
+    .signal-number {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-red);
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 0 0 18px rgba(255, 0, 79, 0.9);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .signal-fade {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    .aviator-pill-btn {
+      width: 100%;
+      background: rgba(255, 0, 79, 0.05);
+      border: 1.5px solid var(--neon-red);
+      border-radius: 30px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--neon-red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 15px rgba(255, 0, 79, 0.2), inset 0 0 10px rgba(255, 0, 79, 0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .aviator-pill-btn:hover {
+      background: var(--neon-red);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(255, 0, 79, 0.7);
+    }
+
+    .key-list-container {
+      max-height: 160px;
+      overflow-y: auto;
+      margin-top: 15px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 10px;
+      background: #020205;
+    }
+
+    .key-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a0a14;
+      border-left: 3px solid var(--neon-blue);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .key-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .key-value {
+      font-weight: 700;
+      color: var(--neon-blue);
+    }
+
+    .key-expiry {
+      color: var(--subtext-color);
+      font-size: 10px;
+    }
+
+    .del-btn {
+      background: var(--neon-red);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="custom-toast">
+    <span id="toast-icon">⚠️</span>
+    <span id="toast-message">নোটিফিকেশন বার্তা</span>
+  </div>
+
+  <div id="offline-screen" class="hidden">
+    <div class="offline-icon">📡❌</div>
+    <div class="offline-title">No Internet Connection</div>
+    <div class="offline-desc">অ্যাপটি চালাতে ইন্টারনেটের প্রয়োজন 📡 অনুগ্রহ করে মোবাইল ডাটা অথবা ওয়াইফাই চালু করুন !</div>
+  </div>
+
+  <div class="container" id="main-container">
+
+    <div class="developer-tag">
+      <span id="dev-text"></span><span class="cursor"></span>
+    </div>
+
+    <!-- STEP: LOGIN -->
+    <div id="step-login">
+      <div class="animated-robot-wrapper">
+        <div class="spinning-ring"></div>
+        <svg class="center-robot-svg" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="1.8">
+          <rect x="4" y="10" width="16" height="11" rx="3"></rect>
+          <circle cx="12" cy="4" r="2"></circle>
+          <path d="M12 6v4"></path>
+          <circle cx="8.5" cy="14.5" r="1.5" fill="#00e5ff"></circle>
+          <circle cx="15.5" cy="14.5" r="1.5" fill="#00e5ff"></circle>
+          <path d="M9 18h6" stroke-linecap="round"></path>
+        </svg>
+      </div>
+
+      <h1 class="main-title">AX AVIATOR<span>SIGNAL</span></h1>
+      <div class="subtitle">ALL PLATFORM WORKING VIP PREDICTION 100%</div>
+
+      <div class="input-group">
+        <span class="input-icon">🔑</span>
+        <input type="text" id="access-key" placeholder="ENTER ACCESS KEY">
+      </div>
+
+      <button class="btn-3d btn-login-3d" onclick="login()">➔] LOGIN</button>
+      <button class="btn-3d btn-buy-3d" onclick="showGameSelect()">➤ BUY NOW</button>
+      <button class="btn-3d btn-admin-3d" onclick="openAdminModal()">💠 AX PANEL</button>
+    </div>
+
+    <!-- STEP 1: GAME SELECTION -->
+    <div id="step-game-select" class="hidden">
+      <div class="section-title">গেম নির্বাচন করুন</div>
+
+      <div class="info-box">
+        <div class="info-icon">i</div>
+        <div class="info-text">আপনি কোন গেমের সিগন্যাল দেখতে চান সেটির উপরে ক্লিক করুন</div>
+      </div>
+
+      <div class="game-card" onclick="selectGame('AVIATOR VIP')">
+        <div class="game-card-left">
+          <div class="game-icon-circle" style="background: radial-gradient(circle, #ff003c 0%, #500010 100%);">Aviator</div>
+          <div class="game-title">AVIATOR VIP</div>
+        </div>
+        <div style="color: var(--neon-green); font-weight: bold;">❯</div>
+      </div>
+
+      <div class="game-card" onclick="selectGame('CRASH PREMIUM')">
+        <div class="game-card-left">
+          <div class="game-icon-circle" style="background: radial-gradient(circle, #ff9900 0%, #663300 100%);">CRASH</div>
+          <div class="game-title">CRASH PREMIUM</div>
+        </div>
+        <div style="color: var(--neon-green); font-weight: bold;">❯</div>
+      </div>
+
+      <div class="game-card" onclick="selectGame('JETX VIP')">
+        <div class="game-card-left">
+          <div class="game-icon-circle" style="background: radial-gradient(circle, #7a00ff 0%, #200050 100%);">JetX</div>
+          <div class="game-title">JETX VIP</div>
+        </div>
+        <div style="color: var(--neon-green); font-weight: bold;">❯</div>
+      </div>
+
+      <button class="btn-3d btn-admin-3d" style="margin-top: 15px;" onclick="goBack('step-login')">← ফিরে যান</button>
+    </div>
+
+    <!-- STEP 2: SITE SELECTION -->
+    <div id="step-site-select" class="hidden">
+      <div class="section-title" id="site-step-title">পাসওয়ার্ড কিনুন - AVIATOR</div>
+
+      <div class="info-box">
+        <div class="info-icon">i</div>
+        <div class="info-text">নিচে অনেকগুলো বেটিং সাইট দেওয়া হলো নাম এবং ছবি অনুযায়ী ক্লিক করুন। সেগুলোর মধ্যে যদি আপনার পছন্দের তালিকা না থাকে সেক্ষেত্রে আপনি বক্সের মধ্যে সঠিকভাবে আপনার পছন্দের সাইটের নামটুকু লিখুন তারপরে পরবর্তী বাটনটিতে ক্লিক করুন</div>
+      </div>
+
+      <input type="text" id="custom-site-input" class="search-box" placeholder="সাইটের নাম লিখুন (যেমন 1XBET)">
+      <button class="btn-next" onclick="goToPackages()">পরবর্তী ➔</button>
+
+      <div class="sites-grid">
+        <div class="site-item" onclick="chooseSite(this, 'CK44')">
+          <div class="site-logo" style="background: #111; color: #ffeb3b; border-color: #ffeb3b;">CK44</div>
+          <div class="site-name">CK44</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'DK WIN')">
+          <div class="site-logo" style="background: #eed71e; color: #fff;">DK WIN</div>
+          <div class="site-name">DK WIN</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'BK33')">
+          <div class="site-logo" style="background: #800000; color: #ffeb3b;">BK33</div>
+          <div class="site-name">BK33</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'GT99')">
+          <div class="site-logo" style="background: #111; color: #00ff66; border-color: #00ff66;">GT99</div>
+          <div class="site-name">GT99</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'TK999')">
+          <div class="site-logo" style="background: #004d40; color: #fff;">TK999</div>
+          <div class="site-name">TK999</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'TK1971')">
+          <div class="site-logo" style="background: #1b5e20; color: #fff;">TK1971</div>
+          <div class="site-name">TK1971</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '8777BET')">
+          <div class="site-logo" style="background: #b71c1c; color: #ffeb3b;">8777BET</div>
+          <div class="site-name">8777BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'CK444')">
+          <div class="site-logo" style="background: #111; color: #00d9ff; border-color: #00d9ff;">CK444</div>
+          <div class="site-name">CK444</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '9777BET')">
+          <div class="site-logo" style="background: #e65100; color: #fff;">9777BET</div>
+          <div class="site-name">9777BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '1777BET')">
+          <div class="site-logo" style="background: #4a148c; color: #fff;">1777BET</div>
+          <div class="site-name">1777BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '5777BET')">
+          <div class="site-logo" style="background: #880e4f; color: #fff;">5777BET</div>
+          <div class="site-name">5777BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'CV666')">
+          <div class="site-logo" style="background: #d50000; color: #fff;">CV666</div>
+          <div class="site-name">CV666</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '3333BET')">
+          <div class="site-logo" style="background: #311b92; color: #ffeb3b;">3333BET</div>
+          <div class="site-name">3333BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'PKOK')">
+          <div class="site-logo" style="background: #006064; color: #fff;">PKOK</div>
+          <div class="site-name">PKOK</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'BDWIN24')">
+          <div class="site-logo" style="background: #0d47a1; color: #fff;">BDWIN24</div>
+          <div class="site-name">BDWIN24</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '2222BET')">
+          <div class="site-logo" style="background: #f57f17; color: #000;">2222BET</div>
+          <div class="site-name">2222BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'HGZY')">
+          <div class="site-logo" style="background: #f90303; color: #fff;">HGZY</div>
+          <div class="site-name">HGZY</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '499BET')">
+          <div class="site-logo" style="background: #004d40; color: #fff;">499BET</div>
+          <div class="site-name">499BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, '399BET')">
+          <div class="site-logo" style="background: #880e4f; color: #fff;">399BET</div>
+          <div class="site-name">399BET</div>
+        </div>
+        <div class="site-item" onclick="chooseSite(this, 'BK66')">
+          <div class="site-logo" style="background: #e65100; color: #fff;">BK66</div>
+          <div class="site-name">BK66</div>
+        </div>
+      </div>
+
+      <button class="btn-3d btn-admin-3d" style="margin-top:15px;" onclick="showStep('step-game-select')">← পেছনে যান</button>
+    </div>
+
+    <!-- STEP 3: PACKAGE SELECTION -->
+    <div id="step-packages" class="hidden">
+      <div class="section-title">প্যাকেজ ও মূল্য</div>
+      <p style="text-align: center; font-size: 10px; color: #aaa; margin-bottom: 12px;">একটি প্যাকেজ সিলেক্ট করুন, তারপর নিচের বাটনে চাপ দিন</p>
+
+      <div class="pkg-video-card" onclick="selectPkgCard(this, 3000, '1 DAY SIGNAL KEY', '১ দিন')">
+        <div class="discount-badge">🔥 50% ছাড়</div>
+        <div>
+          <div class="pkg-v-title">১ দিনের সিগন্যাল পাসওয়ার্ড</div>
+          <div class="pkg-v-sub">আনলিমিটেড সিগন্যাল</div>
+        </div>
+        <div class="pkg-v-price">
+          <div class="pkg-v-amount">3000 টাকা</div>
+          <div class="pkg-v-old">6000 টাকা</div>
+        </div>
+      </div>
+
+      <div class="pkg-video-card selected" onclick="selectPkgCard(this, 7000, '7 DAYS SIGNAL KEY', '৭ দিন')">
+        <div class="discount-badge">🔥 50% ছাড়</div>
+        <div>
+          <div class="pkg-v-title">৭ দিনের সিগন্যাল পাসওয়ার্ড</div>
+          <div class="pkg-v-sub">আনলিমিটেড সিগন্যাল</div>
+        </div>
+        <div class="pkg-v-price">
+          <div class="pkg-v-amount">7000 টাকা</div>
+          <div class="pkg-v-old">14500 টাকা</div>
+        </div>
+      </div>
+
+      <div class="pkg-video-card" onclick="selectPkgCard(this, 25000, '30 DAYS SIGNAL KEY ', '৩০ দিন')">
+        <div class="discount-badge">🔥 50% ছাড়</div>
+        <div>
+          <div class="pkg-v-title">৩০ দিনের সিগন্যাল পাসওয়ার্ড</div>
+          <div class="pkg-v-sub">আনলিমিটেড সিগন্যাল</div>
+        </div>
+        <div class="pkg-v-price">
+          <div class="pkg-v-amount">25000 টাকা</div>
+          <div class="pkg-v-old">55000 টাকা</div>
+        </div>
+      </div>
+
+      <button class="btn-next" style="margin-top: 15px;" onclick="showPayment()">পরবর্তী ➔</button>
+      <button class="btn-3d btn-admin-3d" onclick="showStep('step-site-select')">← পেছনে যান</button>
+    </div>
+
+    <!-- STEP: ADMIN AUTHENTICATION -->
+    <div id="step-admin-auth" class="hidden">
+      <h2 style="text-align:center; color: var(--neon-blue); font-size: 18px; margin-bottom: 5px;">ADMIN LOGIN</h2>
+      <div class="subtitle" style="color: var(--neon-blue)">ENTER SECURITY KEY</div>
+
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input type="password" id="admin-sec-key" placeholder="Enter Admin Password">
+      </div>
+
+      <button class="btn-3d btn-login-3d" style="padding: 14px; font-size: 13px;" onclick="verifyAdminKey()">LOGIN TO PANEL</button>
+      <button class="btn-3d btn-admin-3d" onclick="goBack('step-login')">CANCEL</button>
+    </div>
+
+    <!-- STEP: ADMIN PANEL -->
+    <div id="step-admin" class="hidden">
+      <h2 style="text-align:center; color: var(--neon-blue); font-size: 18px; margin-bottom: 5px;">ADMIN PANEL</h2>
+      <div class="subtitle" style="color: var(--neon-blue)">GENERATE & MANAGE PASSWORDS</div>
+
+      <div class="input-group" style="margin-bottom: 12px;">
+        <span class="input-icon">🔑</span>
+        <input type="text" id="new-key-input" placeholder="Enter New Password/Key">
+      </div>
+
+      <div class="input-group" style="margin-bottom: 18px;">
+        <span class="input-icon">⏱</span>
+        <select id="key-duration">
+          <option value="0.59"> ১ মিনিট (5 mins)</option>
+          <option value="6">৬ ঘণ্টা (6 Hours)</option>
+          <option value="12">১২ ঘণ্টা (12 Hours)</option>
+          <option value="24">২৪ ঘণ্টা (1 Day)</option>
+          <option value="720">১ মাস (30 Days)</option>
+        </select>
+      </div>
+
+      <button class="btn-3d btn-login-3d" style="padding: 14px; font-size: 13px;" onclick="generateKey()">+ ADD NEW PASSWORD</button>
+
+      <div class="key-list-container" id="key-list-box"></div>
+
+      <button class="btn-3d btn-admin-3d" style="margin-top: 15px;" onclick="goBack('step-login')">BACK TO LOGIN</button>
+    </div>
+
+    <!-- STEP 4: PAYMENT -->
+    <div id="step-payment" class="hidden">
+      <div class="pay-selector active" id="sel-bkash" onclick="selectMethod('bKash')">
+        <div class="pay-selector-left">
+          <div class="badge-icon badge-bkash">bk</div>
+          <span>bKash Payment</span>
+        </div>
+        <span>❯</span>
+      </div>
+
+      <div class="pay-selector" id="sel-nagad" onclick="selectMethod('Nagad')">
+        <div class="pay-selector-left">
+          <div class="badge-icon badge-nagad">N</div>
+          <span>Nagad Payment</span>
+        </div>
+        <span>❯</span>
+      </div>
+
+      <div class="pay-card-new">
+        <div class="pay-card-header" id="card-header">
+          <div>
+            <div class="pay-card-title" id="card-method-title">bKash</div>
+            <div class="pay-card-sub" id="card-game-title">AX AVIATOR VIP</div>
+          </div>
+          <div class="pay-card-price" id="selected-pkg-price">৳ ৭০০০</div>
+        </div>
+
+        <div class="pay-card-body">
+          <div class="pay-instructions">
+            <div class="pay-instruction-item">
+              ১. আপনার বিকাশ / নগদ অ্যাপ দিয়ে নিচে উল্লিখিত নম্বরে <strong>Send Money</strong> করুন।
+            </div>
+
+            <div class="pay-number-box">
+              <span class="pay-num-text" id="demo-num">01889285548</span>
+              <button class="copy-btn-new" onclick="copyNum()">COPY</button>
+            </div>
+
+            <div class="pay-instruction-item" style="margin-top: 10px;">
+              ২. প্যাকেজের মেয়াদ: <strong id="selected-pkg-duration" style="color: #000;">৩ দিন</strong>
+            </div>
+
+            <div class="pay-instruction-item">
+              ৩. সেন্ড মানি সফল হলে নিচের ঘরে সঠিক <strong>TrxID</strong> দিন।
+            </div>
+          </div>
+
+          <span class="pay-input-label">ENTER TRANSACTION ID</span>
+          <input type="text" id="trx-id" class="trx-input-new" placeholder="e.g. 9H7A8K2L3M">
+
+          <button class="btn-verify-pay" id="btn-submit-pay" onclick="submitPayment()">VERIFY PAYMENT</button>
+        </div>
+      </div>
+
+      <button class="btn-cancel-pay" onclick="goBack('step-packages')">CANCEL & BACK</button>
+    </div>
+
+    <!-- STEP: SUCCESS WITH 3D ANIMATED CHECKMARK -->
+    <div id="step-success" class="hidden" style="text-align: center;">
+
+      <div class="success-icon-wrap">
+        <svg class="check-svg-3d" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="check-circle-path" cx="50" cy="50" r="42" stroke-width="6" stroke-linecap="round"/>
+          <path class="check-mark-path" d="M30 52 L43 65 L70 35" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="status-badge">PAYMENT PROCESSING</div>
+
+      <div class="success-heading">সফলভাবে জমা হয়েছে !</div>
+
+      <p class="success-desc">
+        আপনার TRANSACTION ID গ্রহণ করা হয়েছে ! সঠিক ভাবে পেমেন্ট সম্পন্ন হয়ে থাকলে এবং সঠিক TRANSACTION ID রিসিভ হলে সিস্টেম অটোমেটিক লগইন পাসওয়ার্ড প্রদান করবে !
+      </p>
+
+      <div class="success-info-card">
+        <div class="success-info-row">
+          <span class="label">Site:</span>
+          <span class="value" id="res-site">CK44</span>
+        </div>
+        <div class="success-info-row">
+          <span class="label">Package:</span>
+          <span class="value" id="res-pkg">৭ দিনের সিগন্যাল পাসওয়ার্ড</span>
+        </div>
+        <div class="success-info-row">
+          <span class="label">Amount:</span>
+          <span class="value" id="res-amount">৳ ৭০০০ </span>
+        </div>
+        <div class="success-info-row">
+          <span class="label">Method:</span>
+          <span class="value" id="res-method">bKash</span>
+        </div>
+        <div class="success-info-row">
+          <span class="label">Transaction ID:</span>
+          <span class="value" id="res-trx">XXXXX</span>
+        </div>
+      </div>
+
+      <button class="btn-home" onclick="goBack('step-login')">BACK TO HOME</button>
+    </div>
+
+    <!-- STEP: DASHBOARD -->
+    <div id="step-dashboard" class="hidden">
+      <div class="dash-header">
+        <button class="logout-btn" onclick="logout()">
+          <span>[➔</span> LOGOUT
+        </button>
+      </div>
+
+      <h2 class="prime-title">AX SIGNAL 4.0</h2>
+
+      <div class="dash-circle-wrapper">
+        <div class="outer-dashed-ring"></div>
+        <div class="middle-red-wave"></div>
+        <div class="inner-green-rings">
+          <div class="circle-content">
+            <svg class="plane-icon-img" viewBox="0 0 24 24" fill="#00ff88">
+              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+            </svg>
+            <div id="signal-val-display" class="signal-number">Wait</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aviator-pill-btn" onclick="generateRandomSignal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#ff004f">
+          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+        </svg>
+        <span>LIVE SIGNAL 100% ACCURACY</span>
+      </div>
+    </div>
+
+    <div class="status-tag">
+      <span>[ ONLINE ]</span>
+      <span>[ <span id="live-time">00:00 AM</span> ]</span>
+      <span id="battery-status">[ 🔋 --% ]</span>
+    </div>
+
+  </div>
+
+  <script>
+    function showToast(msg, icon = '⚠️') {
+      const toast = document.getElementById('custom-toast');
+      document.getElementById('toast-message').innerText = msg;
+      document.getElementById('toast-icon').innerText = icon;
+
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particlesArray = [];
+    const colors = [
+      '#ff0055', '#00e5ff', '#00ff88', '#9d00ff', 
+      '#ffeb3b', '#ff00a0', '#00ffa6'
+    ];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 7 + 4; 
+        this.speedY = Math.random() * 2 + 0.8;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = Math.random() * 0.85 + 0.3;
+        this.fade = Math.random() * 0.004 + 0.001;
+      }
+
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        this.opacity -= this.fade;
+
+        if (this.y < -20 || this.opacity <= 0) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = this.color;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 6500);
+      for (let i = 0; i < numberOfParticles; i++) {
+        const p = new Particle();
+        p.y = Math.random() * canvas.height;
+        particlesArray.push(p);
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    const ADMIN_SECRET = "AYAN0907@@%%";
+
+    function getStoredKeys() {
+      const keys = localStorage.getItem('app_access_keys');
+      return keys ? JSON.parse(keys) : [];
+    }
+
+    function saveStoredKeys(keys) {
+      localStorage.setItem('app_access_keys', JSON.stringify(keys));
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-sec-key').value = '';
+      showStep('step-admin-auth');
+    }
+
+    function verifyAdminKey() {
+      const pass = document.getElementById('admin-sec-key').value;
+      if (pass === ADMIN_SECRET) {
+        renderKeyList();
+        showStep('step-admin');
+        showToast("ADMIN ACCESS ", "🔐");
+      } else {
+        showToast("ভুল এডমিন পাসওয়ার্ড !", "❌");
+      }
+    }
+
+    function generateKey() {
+      const keyVal = document.getElementById('new-key-input').value.trim();
+      const durationHours = parseFloat(document.getElementById('key-duration').value);
+
+      if (!keyVal) {
+        showToast("একটি পাসওয়ার্ড বা Key লিখুন!", "⚠️");
+        return;
+      }
+
+      const keys = getStoredKeys();
+      const expiryTime = Date.now() + (durationHours * 60 * 60 * 1000);
+
+      keys.push({
+        key: keyVal,
+        expiry: expiryTime,
+        hours: durationHours
+      });
+
+      saveStoredKeys(keys);
+      document.getElementById('new-key-input').value = '';
+      renderKeyList();
+      showToast(`Key "${keyVal}" যুক্ত করা হয়েছে!`, "✅");
+    }
+
+    function deleteKey(index) {
+      const keys = getStoredKeys();
+      keys.splice(index, 1);
+      saveStoredKeys(keys);
+      renderKeyList();
+      showToast("Key ডিলিট করা হয়েছে", "🗑️");
+    }
+
+    function renderKeyList() {
+      const keys = getStoredKeys();
+      const listBox = document.getElementById('key-list-box');
+      listBox.innerHTML = '';
+
+      if (keys.length === 0) {
+        listBox.innerHTML = '<div style="font-size: 11px; color: #777; text-align: center;">কোনো পাসওয়ার্ড যুক্ত করা হয়নি</div>';
+        return;
+      }
+
+      const now = Date.now();
+
+      keys.forEach((item, index) => {
+        const isExpired = now > item.expiry;
+        const timeLeft = item.expiry - now;
+
+        let timeStr = "";
+        if (isExpired) {
+          timeStr = "Expired (মেয়াদ শেষ)";
+        } else {
+          const totalMins = Math.floor(timeLeft / (1000 * 60));
+          const hrs = Math.floor(totalMins / 60);
+          const mins = totalMins % 60;
+          timeStr = `মেয়াদ বাকি: ${hrs}h ${mins}m`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'key-item';
+        div.innerHTML = `
+          <div class="key-item-info">
+            <span class="key-value">${item.key}</span>
+            <span class="key-expiry" style="color: ${isExpired ? '#ff004f' : '#9494ab'}">${timeStr}</span>
+          </div>
+          <button class="del-btn" onclick="deleteKey(${index})">DEL</button>
+        `;
+        listBox.appendChild(div);
+      });
+    }
+
+    function login() {
+      const inputKey = document.getElementById('access-key').value.trim();
+      if (!inputKey) {
+        showToast(" ENTER KEY ?", "🔑");
+        return;
+      }
+
+      const keys = getStoredKeys();
+      const now = Date.now();
+
+      const validKey = keys.find(k => k.key === inputKey && now < k.expiry);
+
+      if (validKey) {
+        localStorage.setItem('active_user_key', inputKey);
+        showStep('step-dashboard');
+        showToast("LOGIN SUCCESS !", "🚀");
+      } else {
+        showToast("INVAILD KEY? ", "❌");
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('active_user_key');
+      showStep('step-login');
+      showToast("লগআউট করা হয়েছে", "ℹ️");
+    }
+
+    const signalList = [
+      "1.09x", "1.15x", "1.22x", "1.34x", "1.45x", "1.58x", "1.67x", "1.79x", "1.88x", "1.95x",
+      "2.05x", "2.14x", "2.28x", "2.35x", "2.42x", "2.50x", "2.68x", "2.75x", "2.89x", "2.94x",
+      "3.10x", "3.25x", "3.40x", "3.55x", "3.72x", "3.85x", "3.98x", "4.12x", "4.30x", "4.50x",
+      "4.75x", "5.10x", "5.35x", "5.60x", "5.90x", "6.20x", "6.50x", "6.88x", "7.15x", "7.45x"
+    ];
+
+    let signalInterval = null;
+
+    function generateRandomSignal() {
+      const signalDisplay = document.getElementById('signal-val-display');
+      signalDisplay.classList.add('signal-fade');
+
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * signalList.length);
+        signalDisplay.innerText = signalList[randomIndex];
+        signalDisplay.classList.remove('signal-fade');
+      }, 400);
+    }
+
+    function startAutoSignalChange() {
+      stopAutoSignalChange();
+      generateRandomSignal();
+      signalInterval = setInterval(generateRandomSignal, 20000);
+    }
+
+    function stopAutoSignalChange() {
+      if (signalInterval) {
+        clearInterval(signalInterval);
+        signalInterval = null;
+      }
+    }
+
+    function checkNetworkStatus() {
+      const offlineScreen = document.getElementById('offline-screen');
+      if (!navigator.onLine) {
+        offlineScreen.classList.remove('hidden');
+      } else {
+        offlineScreen.classList.add('hidden');
+      }
+    }
+
+    window.addEventListener('online', checkNetworkStatus);
+    window.addEventListener('offline', checkNetworkStatus);
+
+    const textToType = "DEVELOPER ➤ AYAN AHMED RANA ";
+    const devTextElement = document.getElementById("dev-text");
+    let charIndex = 0;
+
+    function typeWriter() {
+      if (charIndex < textToType.length) {
+        devTextElement.textContent += textToType.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 80);
+      } else {
+        setTimeout(() => {
+          devTextElement.textContent = "";
+          charIndex = 0;
+        }, 3000);
+      }
+    }
+
+    function startTypingLoop() {
+      typeWriter();
+      setInterval(() => {
+        if (charIndex === 0) {
+          typeWriter();
+        }
+      }, 5000);
+    }
+
+    function updateLiveTime() {
+      const timeElement = document.getElementById('live-time');
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; 
+      timeElement.textContent = `${hours}:${minutes} ${ampm}`;
+    }
+
+    function updateBatteryStatus() {
+      const batElement = document.getElementById('battery-status');
+      if ('getBattery' in navigator) {
+        navigator.getBattery().then(function(battery) {
+          function setBatteryLevel() {
+            const level = Math.round(battery.level * 100);
+            batElement.textContent = `[ 🔋 ${level}% ]`;
+          }
+          setBatteryLevel();
+          battery.addEventListener('levelchange', setBatteryLevel);
+        });
+      } else {
+        batElement.textContent = `[ 🔋 85% ]`; 
+      }
+    }
+
+    window.onload = function() {
+      checkNetworkStatus();
+      startTypingLoop();
+      updateLiveTime();
+      setInterval(updateLiveTime, 1000); 
+      updateBatteryStatus();
+    };
+
+    let selectedGame = 'AX AVIATOR VIP';
+    let selectedSite = '';
+    let selectedAmount = 2260;
+    let selectedPkgName = '৩ দিনের সিগন্যাল পাসওয়ার্ড';
+    let selectedPkgDuration = '৩ দিন';
+    let currentMethod = 'bKash';
+
+    const success12Colors = [
+      '#00ff88', '#00e5ff', '#ff0055', '#9d00ff', 
+      '#ffeb3b', '#ff00a0', '#00ffa6', '#ff6600', 
+      '#7000ff', '#00ffff', '#ff003c', '#00ff2b'
+    ];
+
+    let successColorIndex = 0;
+    let successColorInterval = null;
+
+    function startSuccessColorAnimation() {
+      stopSuccessColorAnimation();
+      const container = document.getElementById('main-container');
+      container.classList.add('success-active');
+
+      successColorInterval = setInterval(() => {
+        successColorIndex = (successColorIndex + 1) % success12Colors.length;
+        document.documentElement.style.setProperty('--dynamic-success-color', success12Colors[successColorIndex]);
+      }, 1000);
+    }
+
+    function stopSuccessColorAnimation() {
+      if (successColorInterval) {
+        clearInterval(successColorInterval);
+        successColorInterval = null;
+      }
+      const container = document.getElementById('main-container');
+      container.classList.remove('success-active');
+      document.documentElement.style.setProperty('--dynamic-success-color', '#00ff88');
+    }
+
+    function showStep(stepId) {
+      document.querySelectorAll('.container > div:not(.developer-tag):not(.status-tag)').forEach(div => div.classList.add('hidden'));
+      document.getElementById(stepId).classList.remove('hidden');
+
+      if (stepId === 'step-dashboard') {
+        startAutoSignalChange();
+      } else {
+        stopAutoSignalChange();
+      }
+
+      if (stepId === 'step-success') {
+        startSuccessColorAnimation();
+      } else {
+        stopSuccessColorAnimation();
+      }
+    }
+
+    function goBack(stepId) { showStep(stepId); }
+
+    function showGameSelect() { showStep('step-game-select'); }
+
+    function selectGame(gameName) {
+      selectedGame = gameName;
+      document.getElementById('site-step-title').innerText = 'পাসওয়ার্ড কিনুন - ' + gameName;
+      showStep('step-site-select');
+    }
+
+    function chooseSite(el, siteName) {
+      document.querySelectorAll('.site-item').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedSite = siteName;
+      document.getElementById('custom-site-input').value = siteName;
+    }
+
+    function goToPackages() {
+      const inputVal = document.getElementById('custom-site-input').value.trim();
+      if (inputVal !== '') {
+        selectedSite = inputVal;
+      }
+      if (!selectedSite) {
+        showToast("একটি সাইট সিলেক্ট করুন অথবা নাম লিখুন", "⚠️");
+        return;
+      }
+      showStep('step-packages');
+    }
+
+    function selectPkgCard(el, amount, pkgName, duration) {
+      document.querySelectorAll('.pkg-video-card').forEach(card => card.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedAmount = amount;
+      selectedPkgName = pkgName;
+      selectedPkgDuration = duration;
+    }
+
+    function showPayment() {
+      document.getElementById('selected-pkg-price').innerText = '৳' + selectedAmount;
+      document.getElementById('selected-pkg-duration').innerText = selectedPkgDuration;
+      document.getElementById('card-game-title').innerText = selectedGame;
+      selectMethod(currentMethod);
+      showStep('step-payment');
+    }
+
+    function selectMethod(method) {
+      currentMethod = method;
+      document.getElementById('sel-bkash').classList.toggle('active', method === 'bKash');
+      document.getElementById('sel-nagad').classList.toggle('active', method === 'Nagad');
+
+      const cardHeader = document.getElementById('card-header');
+      const methodTitle = document.getElementById('card-method-title');
+      const submitBtn = document.getElementById('btn-submit-pay');
+
+      if(method === 'Nagad') {
+        cardHeader.classList.add('nagad-bg');
+        methodTitle.innerText = 'Nagad';
+        submitBtn.style.background = 'var(--nagad-color)';
+        submitBtn.style.boxShadow = '0 4px 15px rgba(247, 147, 30, 0.4)';
+      } else {
+        cardHeader.classList.remove('nagad-bg');
+        methodTitle.innerText = 'bKash';
+        submitBtn.style.background = '#e2136e';
+        submitBtn.style.boxShadow = '0 4px 15px rgba(226, 19, 110, 0.4)';
+      }
+
+      document.getElementById('demo-num').innerText = '01889285548';
+    }
+
+    function copyNum() {
+      const num = document.getElementById('demo-num').innerText;
+      navigator.clipboard.writeText(num);
+      showToast("সফল ভাবে নম্বর কপি করা হয়েছে !", "📋");
+    }
+
+    function submitPayment() {
+      const trx = document.getElementById('trx-id').value.trim();
+      if (!trx) {
+        showToast("TRANSACTION ID প্রদান করুন !", "⚠️");
+        return;
+      }
+
+      document.getElementById('res-site').innerText = selectedSite;
+      document.getElementById('res-pkg').innerText = selectedPkgName;
+      document.getElementById('res-amount').innerText = '৳' + selectedAmount;
+      document.getElementById('res-method').innerText = currentMethod;
+      document.getElementById('res-trx').innerText = trx;
+
+      showStep('step-success');
+    }
+  </script>
+</body>
+</html>
